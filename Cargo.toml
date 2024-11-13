@@ -10,7 +10,3 @@ crate-type = ["cdylib"]
 [dependencies]
 pyo3 = { version = "0.22.5", features = ["extension-module", "gil-refs"] }
 crc32-v2 = "0.0.4"
-
-[target.armv7-unknown-linux-musleabihf]
-linker = "armv7-linux-musleabihf-gcc"
-rustflags = "-C target-cpu=cortex-a72"
