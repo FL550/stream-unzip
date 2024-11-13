@@ -25,10 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update version in pyproject.toml from current git tag
-        run: |
-          sed -i "s/0\\.0\\.0\\.dev0/${GITHUB_REF_NAME/v/}/g" pyproject.toml
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -37,7 +33,7 @@ jobs:
       - name: Build packages
         run: >-
           docker run --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }} bash -c '
-            apt-get install arm-linux-musleabihf-gcc &&
+            apt install arm-linux-musleabihf-gcc &&
             cd /app &&
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&
             . "$HOME/.cargo/env" &&
