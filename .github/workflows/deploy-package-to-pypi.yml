@@ -32,9 +32,7 @@ jobs:
 
       - name: Build packages
         run: >-
-          docker run --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }} bash -c '
-            apk update &&
-            apk add arm-linux-musleabihf-gcc &&
+          docker run --platform linux/arm/v7 --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }} bash -c '
             cd /app &&
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&
             . "$HOME/.cargo/env" &&
