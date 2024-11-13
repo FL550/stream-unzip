@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - "linux_armv7l"
+          - "musllinux_1_2_armv7l"
         folder:
           - "cp312-cp312"
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: Build packages
         run: >-
-          docker run --platform linux/arm/v7 --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }} bash -c '
+          docker run --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }} bash -c '
             cd /app &&
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&
             . "$HOME/.cargo/env" &&
