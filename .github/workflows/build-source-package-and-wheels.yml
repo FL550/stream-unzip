@@ -1,6 +1,7 @@
 name: Build source package and wheels
 
 on:
+  workflow_dispatch: 
   workflow_call:
     inputs:
       github-ref-name:
@@ -8,33 +9,6 @@ on:
         type: string
 
 jobs:
-  build-source:
-    name: Build source package
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Update version in pyproject.toml from current git tag
-        run: |
-          GITHUB_REF_NAME=${{ inputs.github-ref-name }}
-          sed -i "s/0\\.0\\.0\\.dev0/${GITHUB_REF_NAME/v/}/g" pyproject.toml
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: 3.13
-
-      - name: Build package
-        run: |
-          pip install build
-          python -m build --sdist
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: source
-          path: ./dist
 
   build-linux-non-arm7l:
     name: Build Linux wheels (all but arm7l)
@@ -50,13 +24,8 @@ jobs:
           - "manylinux2014_aarch64"
           - "musllinux_1_1_aarch64"
         python-version:
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
           - "3.13"
+          - "3.14"
 
     steps:
       - uses: actions/checkout@v4
@@ -115,13 +84,8 @@ jobs:
         image:
           - "musllinux_1_2_armv7l"
         python-version:
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
           - "3.13"
+          - "3.14"
 
     steps:
       - uses: actions/checkout@v4
@@ -174,12 +138,8 @@ jobs:
           - "macos-14"  # ARM
           - "macos-15"  # ARM
         python-version:
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
           - "3.13"
+          - "3.14"
     runs-on: '${{ matrix.os }}'
     permissions:
       contents: read
@@ -225,13 +185,8 @@ jobs:
         os:
           - "windows-2022"
         python-version:
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
           - "3.13"
+          - "3.14"
     runs-on: '${{ matrix.os }}'
     permissions:
       contents: read
