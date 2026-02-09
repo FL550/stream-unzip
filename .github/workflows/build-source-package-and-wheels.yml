@@ -2,6 +2,10 @@ name: Build source package and wheels
 
 on:
   workflow_dispatch: 
+    inputs:
+      github-ref-name:
+        required: true
+        type: string
   workflow_call:
     inputs:
       github-ref-name:
