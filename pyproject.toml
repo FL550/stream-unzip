@@ -29,7 +29,6 @@ dev = [
     "pytest>=6.2.5",
     "pytest-cov>=3.0.0",
     "trio>=0.19.0",
-    "typed-ast ; python_version < '3.8'",
 ]
 ci = [
     "mypy==1.4.1",
