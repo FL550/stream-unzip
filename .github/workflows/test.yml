@@ -50,7 +50,7 @@ jobs:
       - name: "Run type checking"
         if: matrix.python-version != '3.14.0'
         run: |
-          mypy python test.py --disable-error-code import
+          mypy python test_stream_unzip.py --disable-error-code import
       - name: "Run tests"
         run: |
           coverage run -m unittest -v test_stream_unzip
