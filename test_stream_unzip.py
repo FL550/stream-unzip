@@ -844,7 +844,7 @@ class TestStreamUnzip(unittest.TestCase):
         ])
 
     @unittest.skipIf(
-        tuple(int(v) for v in platform.python_version().split('.')) == (3,7,1),
+         platform.python_version_tuple() == ('3', '7', '1'),
         "trio appears not compatible with Python 3.7.1",
     )
     def test_async_stream_unzip_with_trio(self):
@@ -911,7 +911,7 @@ class TestStreamUnzip(unittest.TestCase):
         self.assertEqual(state, ['in', 'out', 'in', 'out', 'in', 'out', 'out', 'in', 'out', 'in'])
 
     @unittest.skipIf(
-        tuple(int(v) for v in platform.python_version().split('.')) < (3,7,0),
+        platform.python_version_tuple() == ('3', '7', '1'),
         "contextvars are not supported before Python 3.7.0",
     )
     def test_copy_of_context_variable_available_in_iterable(self):
