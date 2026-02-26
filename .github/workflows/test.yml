@@ -41,6 +41,11 @@ jobs:
           version: "0.6.17"
           python-version: ${{ matrix.python-version }}
           activate-environment: true
+      - name: "Set up Python ${{ matrix.python-version }}"
+        if: matrix.python-version == '3.14.0'
+        uses: "actions/setup-python@v5"
+        with:
+          python-version: 3.14
       - name: "Install python dependencies"
         run: |
           uv pip install '.[dev,ci]'
