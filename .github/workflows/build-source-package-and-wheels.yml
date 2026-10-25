@@ -97,7 +97,7 @@ jobs:
             cd /app &&
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&
             . "$HOME/.cargo/env" &&
-            uv build --python /opt/python/${{ matrix.folder }}/bin/python --wheel
+            uv build --python /opt/python/${{ matrix.folder }}/bin/python --wheel &&
             auditwheel repair $(ls dist/*.whl) &&
             rm dist/*.whl &&
             cp wheelhouse/*.whl dist
@@ -121,7 +121,6 @@ jobs:
         image:
           - "musllinux_1_2_armv7l"
         folder:
-          - "cp38-cp38"
           - "cp39-cp39"
           - "cp310-cp310"
           - "cp311-cp311"
@@ -131,7 +130,7 @@ jobs:
           - "cp315-cp315"
 
     env:
-      # 2026.09.01-1 covers 3.8 to 3.15
+      # 2026.09.01-1 for armv7l covers 3.9 to 3.15: no cp38 interpreter in the image
       TAG: 2026.09.01-1
 
     steps:
@@ -152,7 +151,7 @@ jobs:
           docker run --rm -v ${{ github.workspace }}:/app quay.io/pypa/${{ matrix.image }}:$TAG bash -c '
             cd /app &&
             apk add rust cargo &&
-            uv build --python /opt/python/${{ matrix.folder }}/bin/python --wheel
+            uv build --python /opt/python/${{ matrix.folder }}/bin/python --wheel &&
             auditwheel repair $(ls dist/*.whl) &&
             rm dist/*.whl &&
             cp wheelhouse/*.whl dist
